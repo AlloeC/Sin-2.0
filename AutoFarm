@@ -1,0 +1,19 @@
+
+pcall(function()
+while (_G.OnOffScript) == true 
+do wait (0.1) 
+pcall(function()
+fireproximityprompt(workspace.Blank.Attachment.ProximityPrompt, distance)
+end)
+
+pcall(function()
+fireproximityprompt(workspace.NPCs.FakeIDSeller.UpperTorso.Attachment.ProximityPrompt, distance)
+end)
+
+pcall(function()
+fireproximityprompt(Workspace.NPCs["Bank Teller"].UpperTorso.Attachment.ProximityPrompt, distance)
+end)
+
+
+
+end end)
