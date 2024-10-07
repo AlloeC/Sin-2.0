@@ -1,0 +1,198 @@
+---Farm ROOM Spawn---
+
+
+pcall(function()
+local Part1 = Instance.new('Part')
+Part1.Name = "Nilll"
+Part1.Position = Vector3.new(251.3175048828125, -1.124993920326233, -330.3175048828125)
+Part1.Parent = game.Workspace
+Part1.Anchored = true
+Part1.Size = Vector3.new(5, 1, 4)
+Part1.Material = "Pebble"
+Part1.Color = Color3.new(1.000000, 1.000000, 1.000000)
+end)
+
+pcall(function()
+local Part1 = Instance.new('Part')
+Part1.Name = "Nilll"
+Part1.Position = Vector3.new(250.3175048828125, -2.1249938011169434, -330.3175048828125)
+Part1.Parent = game.Workspace
+Part1.Anchored = true
+Part1.Size = Vector3.new(5, 1, 4)
+Part1.Material = "Pebble"
+Part1.Color = Color3.new(1.000000, 1.000000, 1.000000)
+end)
+
+pcall(function()
+local Part1 = Instance.new('Part')
+Part1.Name = "Nilll"
+Part1.Position = Vector3.new(249.3175048828125, -3.1249938011169434, -330.3175048828125)
+Part1.Parent = game.Workspace
+Part1.Anchored = true
+Part1.Size = Vector3.new(5, 1, 4)
+Part1.Material = "Pebble"
+Part1.Color = Color3.new(1.000000, 1.000000, 1.000000)
+end)
+
+pcall(function()
+local Part1 = Instance.new('Part')
+Part1.Name = "Nilll"
+Part1.Position = Vector3.new(248.3175048828125, -4.124993801116943, -330.3175048828125)
+Part1.Parent = game.Workspace
+Part1.Anchored = true
+Part1.Size = Vector3.new(5, 1, 4)
+Part1.Material = "Pebble"
+Part1.Color = Color3.new(1.000000, 1.000000, 1.000000)
+end)
+
+pcall(function()
+local Part1 = Instance.new('Part')
+Part1.Name = "Nilll"
+Part1.Position = Vector3.new(247.3175048828125, -5.124993801116943, -330.3175048828125)
+Part1.Parent = game.Workspace
+Part1.Anchored = true
+Part1.Size = Vector3.new(5, 1, 4)
+Part1.Material = "Pebble"
+Part1.Color = Color3.new(1.000000, 1.000000, 1.000000)
+end)
+
+pcall(function()
+local Part1 = Instance.new('Part')
+Part1.Name = "Nilll"
+Part1.Position = Vector3.new(246.3175048828125, -6.124993801116943, -330.3175048828125)
+Part1.Parent = game.Workspace
+Part1.Anchored = true
+Part1.Size = Vector3.new(5, 1, 4)
+Part1.Material = "Pebble"
+Part1.Color = Color3.new(1.000000, 1.000000, 1.000000)
+end)
+
+
+pcall(function()
+local Part1 = Instance.new('Part')
+Part1.Name = "Nilll"
+Part1.Position = Vector3.new(245.3175048828125, -7.124993801116943, -330.3175048828125)
+Part1.Parent = game.Workspace
+Part1.Anchored = true
+Part1.Size = Vector3.new(5, 1, 4)
+Part1.Material = "Pebble"
+Part1.Color = Color3.new(1.000000, 1.000000, 1.000000)
+end)
+
+pcall(function()
+local Part1 = Instance.new('Part')
+Part1.Name = "Nilll"
+Part1.Position = Vector3.new(244.3175048828125, -8.124994277954102, -330.3175048828125)
+Part1.Parent = game.Workspace
+Part1.Anchored = true
+Part1.Size = Vector3.new(5, 1, 4)
+Part1.Material = "Pebble"
+Part1.Color = Color3.new(1.000000, 1.000000, 1.000000)
+end)
+
+pcall(function()
+local Part1 = Instance.new('Part')
+Part1.Name = "Nilll"
+Part1.Position = Vector3.new(104.3175048828125, -4.624994277954102, -331.8175048828125)
+Part1.Parent = game.Workspace
+Part1.Anchored = true
+Part1.Size = Vector3.new(299, 10, 3)
+Part1.Material = "Pebble"
+Part1.Color = Color3.new(1.000000, 1.000000, 1.000000)
+end)
+
+pcall(function()
+local Part1 = Instance.new('Part')
+Part1.Name = "Nilll"
+Part1.Position = Vector3.new(104.3175048828125, -4.624994277954102, -327.8175048828125)
+Part1.Parent = game.Workspace
+Part1.Anchored = true
+Part1.Size = Vector3.new(299, 10, 1)
+Part1.Material = "Pebble"
+Part1.Color = Color3.new(1.000000, 1.000000, 1.000000)
+end)
+
+pcall(function()
+local Part1 = Instance.new('Part')
+Part1.Name = "Nilll"
+Part1.Position = Vector3.new(-45.6824951171875, -4.624994277954102, -330.3175048828125)
+Part1.Parent = game.Workspace
+Part1.Anchored = true
+Part1.Size = Vector3.new(1, 10, 4)
+Part1.Material = "Pebble"
+Part1.Color = Color3.new(1.000000, 1.000000, 1.000000)
+end)
+
+
+pcall(function()
+local Part1 = Instance.new('Part')
+Part1.Name = "Nilll"
+Part1.Position = Vector3.new(98.8175048828125, -9.124994277954102, -329.8175048828125)
+Part1.Parent = game.Workspace
+Part1.Anchored = true
+Part1.Size = Vector3.new(288, 1, 3)
+Part1.Material = "Pebble"
+Part1.Color = Color3.new(1.000000, 1.000000, 1.000000)
+end)
+pcall(function()
+local targetSize = Vector3.new(0.073333740234375, 32, 41.875)  -- Replace with your desired size
+local targetPosition = Vector3.new(251.46832275390625, 15.625007629394531, -334.3175048828125)  -- Replace with your desired position
+
+-- Function to find the unnamed part
+local function findUnnamedPart()
+    for _, part in ipairs(workspace.Map.Prop["jenna slon, jj pizza"]:GetChildren()) do
+        if part:IsA("Part") and part.Name == "Part" then  -- Check if it's a part and unnamed
+            if part.Size == targetSize and part.Position == targetPosition then
+                return part  -- Return the part if it matches size and position
+            end
+        end
+    end
+    return nil  -- Return nil if no match is found
+end
+
+-- Usage
+local foundPart = findUnnamedPart()
+
+if foundPart then
+   print "Script Running!"
+    foundPart:Destroy()
+  
+else
+   print "Script Already Ran"
+
+end
+end)
+
+
+
+--Delete Parts Script---
+pcall(function()
+local targetSize = Vector3.new(0.073333740234375, 32, 41.875)  -- Replace with your desired size
+local targetPosition = Vector3.new(251.46832275390625, 15.625007629394531, -334.3175048828125)  -- Replace with your desired position
+
+-- Function to find the unnamed part
+local function findUnnamedPart()
+    for _, part in ipairs(workspace.Map.Prop["jenna slon, jj pizza"]:GetChildren()) do
+        if part:IsA("Part") and part.Name == "Part" then  -- Check if it's a part and unnamed
+            if part.Size == targetSize and part.Position == targetPosition then
+                return part  -- Return the part if it matches size and position
+            end
+        end
+    end
+    return nil  -- Return nil if no match is found
+end
+
+-- Usage
+local foundPart = findUnnamedPart()
+
+if foundPart then
+   print "Script Running!"
+    foundPart:Destroy()
+  
+else
+   print "Script Already Ran"
+
+end
+end)
+
+
