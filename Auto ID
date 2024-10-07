@@ -1,0 +1,40 @@
+--IDGRABBER---
+_G.IDEquipFast = true
+_G.OnOffScript = true
+
+
+pcall(function()
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+-- Name of the tool to check for
+local toolName = "Fake ID"
+
+-- Function to equip the tool
+local function equipTool()
+    -- Wait for the character to load
+    local character = player.Character or player.CharacterAdded:Wait()
+
+    -- Check for the tool in the player's Backpack
+    local tool = player.Backpack:FindFirstChild(toolName)
+
+    if tool then
+        -- Equip the tool if found
+        tool.Parent = character
+        print("Equipped tool:", toolName)
+    else
+        print("Tool not found in Backpack.")
+    end
+end
+
+-- Continuously check for the tool
+while true do
+    if _G.IDEquipFast then
+        equipTool()  -- Equip the tool only if IDEquipFast is true
+    else
+        print("IDEquipFast is false. Waiting to check again.")
+    end
+    wait(1)  -- Wait for 1 second before checking again
+end
+end)
+
