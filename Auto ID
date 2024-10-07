@@ -1,6 +1,3 @@
---IDGRABBER---
-_G.IDEquipFast = true
-_G.OnOffScript = true
 
 
 pcall(function()
