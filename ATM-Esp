@@ -1,0 +1,208 @@
+_G.CurrentATM = nil -- Initialize the CurrentATM variable
+
+--- ATM ESP
+
+local targetGameId = 3734304510 -- Desired Game ID
+
+-- Check if the current game ID matches the target game ID
+if game.GameId == targetGameId then
+    --- Define the parent folder containing the ATMs
+    local atmFolder = workspace:WaitForChild("Map"):WaitForChild("ATMS")
+    local UserInputService = game:GetService("UserInputService")
+    local Players = game:GetService("Players")
+
+    -- Table to keep track of the enabled state of ProximityPrompts
+    local previousStates = {}
+
+    -- Table to keep track of the beams created
+    local activeBeams = {}
+
+    -- Toggle state for the beams
+    local beamsEnabled = true
+
+    -- Create a TextLabel for the ATM ESP status
+    local playerGui = Players.LocalPlayer:WaitForChild("PlayerGui")
+    local statusLabel = Instance.new("TextLabel")
+    statusLabel.Size = UDim2.new(0, 150, 0, 50) -- Width and height of the label
+    statusLabel.Position = UDim2.new(1, -160, 0, 10) -- Position in the top right corner
+    statusLabel.BackgroundTransparency = 1 -- Make background transparent
+    statusLabel.TextColor3 = Color3.fromRGB(255, 255, 255) -- White text
+    statusLabel.TextScaled = true -- Scale text
+    statusLabel.Parent = playerGui -- Add to PlayerGui
+
+    -- Function to create a visual line
+    local function createBeam()
+        local beamPart = Instance.new("Part")
+        beamPart.Size = Vector3.new(0.2, 0.2, 1)  -- Default length
+        beamPart.Color = Color3.fromRGB(255, 0, 0) -- Red color
+        beamPart.Anchored = true
+        beamPart.CanCollide = false
+        beamPart.Material = Enum.Material.Neon
+        beamPart.Parent = workspace
+        
+        local beam = Instance.new("Beam")
+        beam.Color = ColorSequence.new(Color3.fromRGB(255, 0, 0))
+        beam.Width0 = 0.05  -- Make this thinner
+        beam.Width1 = 0.05  -- Make this thinner
+        beam.Attachment0 = Instance.new("Attachment", beamPart)
+        beam.Attachment1 = Instance.new("Attachment", beamPart)
+        beam.Parent = beamPart
+
+        -- Set initial visibility based on the beamsEnabled state
+        beamPart.Transparency = beamsEnabled and 0.5 or 1 -- Set to 0.5 if enabled, else fully transparent
+
+        return beamPart
+    end
+
+    -- Function to update the position of the beams
+    local function updateBeams(characterHead)
+        for atmName, beamPart in pairs(activeBeams) do
+            local atm = atmFolder:FindFirstChild(atmName)
+            if atm then
+                beamPart.Position = (characterHead.Position + atm.Position) / 2  -- Center position
+                beamPart.Size = Vector3.new(0.2, 0.2, (characterHead.Position - atm.Position).Magnitude)
+                beamPart.CFrame = CFrame.new(beamPart.Position, atm.Position)  -- Orient to target
+            else
+                -- Remove the beam if ATM no longer exists
+                beamPart:Destroy()
+                activeBeams[atmName] = nil
+            end
+        end
+    end
+
+    -- Variable to keep track of the last printed ATM
+    local lastPrintedATM = nil
+
+    -- Function to check the status of ProximityPrompts
+    local function checkAtmProximityPrompts()
+        local player = Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local head = character:WaitForChild("Head")
+        
+        -- Check the enabled state of each ATM
+        for i = 1, 15 do
+            local atmName = "ATM" .. i
+            local atm = atmFolder:FindFirstChild(atmName)
+            
+            if atm then
+                local attachment = atm:FindFirstChild("Attachment")
+                if attachment then
+                    local proximityPrompt = attachment:FindFirstChildOfClass("ProximityPrompt")
+                    if proximityPrompt then
+                        -- Check current enabled state
+                        local currentState = proximityPrompt.Enabled
+                        -- If this is the first check, initialize the state
+                        if previousStates[atmName] == nil then
+                            previousStates[atmName] = currentState
+                        elseif previousStates[atmName] ~= currentState then
+                            -- State has changed
+                            if currentState then
+                                print(atmName .. " ProximityPrompt is now enabled.")
+                                -- Create a new beam for the enabled ATM
+                                activeBeams[atmName] = createBeam()
+                            else
+                                print(atmName .. " ProximityPrompt is now disabled.")
+                                -- Remove the beam if it exists
+                                if activeBeams[atmName] then
+                                    activeBeams[atmName]:Destroy()
+                                    activeBeams[atmName] = nil
+                                end
+                            end
+                            -- Update the stored state
+                            previousStates[atmName] = currentState
+                        end
+
+                        -- If the ATM is enabled at startup, create a beam for it
+                        if currentState and previousStates[atmName] == nil then
+                            print(atmName .. " was enabled at startup.")
+                            activeBeams[atmName] = createBeam()
+                        end
+
+                        -- Check distance from the player's head to the ATM
+                        local distance = (head.Position - atm.Position).Magnitude
+                        if currentState and distance <= 5 then  -- Changed to 5 studs
+                            _G.CurrentATM = atmName -- Update CurrentATM when within range
+                            if _G.CurrentATM ~= lastPrintedATM then
+                                print("Current ATM: " .. _G.CurrentATM)
+                                
+                                -- Check for the Card in the player's inventory
+                                local cardItem = player.Backpack:FindFirstChild("Card")
+                                if cardItem and not cardItem:IsDescendantOf(workspace) then
+                                    -- Pull out the Card if it's not already active
+                                    cardItem.Parent = workspace -- Move it to the workspace to activate it
+                                    print("Card has been pulled out.")
+                                end
+
+                                local atmModel33 = workspace.Map.ATMS:FindFirstChild(_G.CurrentATM).Attachment.ProximityPrompt
+                                fireproximityprompt(atmModel33, distance)  -- Print only if it has changed
+                                lastPrintedATM = _G.CurrentATM -- Update last printed ATM
+                            end
+                        elseif distance > 5 and _G.CurrentATM == atmName then  -- Changed to 5 studs
+                            _G.CurrentATM = nil -- Reset CurrentATM when leaving range
+                            lastPrintedATM = nil -- Reset the last printed ATM
+                        end
+                    end
+                end
+            end
+        end
+
+        -- Update positions of active beams
+        updateBeams(head)
+    end
+
+    -- Initial check to create beams for currently enabled ATMs
+    local function initialCheck()
+        local player = Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local head = character:WaitForChild("Head")
+
+        for i = 1, 15 do
+            local atmName = "ATM" .. i
+            local atm = atmFolder:FindFirstChild(atmName)
+            if atm then
+                local attachment = atm:FindFirstChild("Attachment")
+                if attachment then
+                    local proximityPrompt = attachment:FindFirstChildOfClass("ProximityPrompt")
+                    if proximityPrompt and proximityPrompt.Enabled then
+                        print(atmName .. " was enabled at startup.")
+                        activeBeams[atmName] = createBeam()
+                    end
+                end
+            end
+        end
+
+        -- Update positions of active beams
+        updateBeams(head)
+    end
+
+    -- Perform the initial check
+    initialCheck()
+
+    -- Function to toggle the beams on and off
+    local function toggleBeams()
+        beamsEnabled = not beamsEnabled
+        for atmName, beamPart in pairs(activeBeams) do
+            beamPart.Transparency = beamsEnabled and 0.5 or 1 -- Set transparency based on the toggle
+        end
+        statusLabel.Text = "ATM ESP: " .. (beamsEnabled and "ON" or "OFF") -- Update the status label
+        print("Beams are now " .. (beamsEnabled and "enabled." or "disabled."))
+    end
+
+    -- Initialize the status label text
+    statusLabel.Text = "ATM ESP: " .. (beamsEnabled and "ON" or "OFF")
+
+    -- Listen for the "P" key press to toggle beams
+    UserInputService.InputBegan:Connect(function(input, gameProcessed)
+        if not gameProcessed and input.KeyCode == Enum.KeyCode.P then
+            toggleBeams()
+        end
+    end)
+
+    -- Run the check continuously
+    game:GetService("RunService").RenderStepped:Connect(function()
+        checkAtmProximityPrompts()
+    end)
+
+else
+    warn("This script can only be run in the game with ID: " .. targetGameId)
+end
