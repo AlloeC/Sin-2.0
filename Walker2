@@ -39,7 +39,7 @@ pcall(function()
 
     -- Function to handle the key press
     local function onKeyPress(input, gameProcessedEvent)
-        if input.KeyCode == Enum.KeyCode.O and not gameProcessedEvent then
+        if input.KeyCode == Enum.KeyCode.L and not gameProcessedEvent then
             -- Main loop to continuously move between targets
             while true do
                 -- Move to the first target position
