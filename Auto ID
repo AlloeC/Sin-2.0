@@ -20,7 +20,7 @@ local function equipTool()
         tool.Parent = character
         print("Equipped tool:", toolName)
     else
-        print("Tool not found in Backpack.")
+       
     end
 end
 
