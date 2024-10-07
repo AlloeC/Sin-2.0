@@ -124,13 +124,13 @@ if game.GameId == targetGameId then
                             _G.CurrentATM = atmName -- Update CurrentATM when within range
                             if _G.CurrentATM ~= lastPrintedATM then
                                 print("Current ATM: " .. _G.CurrentATM)
-                                
+
                                 -- Check for the Card in the player's inventory
                                 local cardItem = player.Backpack:FindFirstChild("Card")
-                                if cardItem and not cardItem:IsDescendantOf(workspace) then
-                                    -- Pull out the Card if it's not already active
-                                    cardItem.Parent = workspace -- Move it to the workspace to activate it
-                                    print("Card has been pulled out.")
+                                if cardItem then
+                                    -- Equip the Card if it's found in the backpack
+                                    player.Character:FindFirstChildOfClass("Humanoid"):EquipTool(cardItem)
+                                    print("Card has been equipped.")
                                 end
 
                                 local atmModel33 = workspace.Map.ATMS:FindFirstChild(_G.CurrentATM).Attachment.ProximityPrompt
