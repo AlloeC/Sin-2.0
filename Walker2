@@ -1,0 +1,59 @@
+-- Auto Walker with Key Press Activation
+
+pcall(function()
+    local Players = game:GetService("Players")
+    local UserInputService = game:GetService("UserInputService")
+    local player = Players.LocalPlayer
+
+    -- Define the target positions
+    local firstTargetPosition = Vector3.new(-44.12623596191406, -5.262861251831055, -329.2290344238281)  -- First position
+    local secondTargetPosition = Vector3.new(224.97230529785156, -5.262861251831055, -329.2290344238281) -- Second position
+
+    -- Function to move the character to a target position
+    local function moveToTarget(targetPosition)
+        -- Wait for the character to load
+        local character = player.Character or player.CharacterAdded:Wait()
+        
+        -- Wait for the Humanoid and HumanoidRootPart to be available
+        local humanoid = character:WaitForChild("Humanoid")
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+        -- Repeat moving until the character reaches the target position
+        while true do
+            -- Move the character to the target position
+            humanoid:MoveTo(targetPosition)
+            print("Moving to position:", targetPosition)
+
+            -- Wait until the character reaches the target position or gets close enough
+            humanoid.MoveToFinished:Wait()
+
+            -- Check if the character is close enough to the target position
+            if (humanoidRootPart.Position - targetPosition).Magnitude < 1 then
+                print("Reached the target position!")
+                break  -- Exit the loop if the target is reached
+            else
+                print("Still moving to target...")
+            end
+        end
+    end
+
+    -- Function to handle the key press
+    local function onKeyPress(input, gameProcessedEvent)
+        if input.KeyCode == Enum.KeyCode.O and not gameProcessedEvent then
+            -- Main loop to continuously move between targets
+            while true do
+                -- Move to the first target position
+                moveToTarget(firstTargetPosition)
+
+                -- Wait for 1 second before moving to the second target
+                wait(1)
+
+                -- Move to the second target position
+                moveToTarget(secondTargetPosition)
+            end
+        end
+    end
+
+    -- Connect the input event
+    UserInputService.InputBegan:Connect(onKeyPress)
+end)
